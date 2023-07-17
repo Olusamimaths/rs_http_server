@@ -1,5 +1,9 @@
 use http::request::Request;
 use server::Server;
+
+mod server;
+mod http;
+
 fn main() {
     println!("Hello, world!");
 
@@ -7,42 +11,3 @@ fn main() {
     server.run();
 }
 
-mod server {
-    pub struct Server {
-        addr: String,
-    }
-
-    impl Server {
-        pub fn new(addr: String) -> Self {
-            Server { addr }
-        }
-
-        pub fn run(self) {
-            print!("Listening on {}", self.addr)
-        }
-    }
-}
-
-mod http {
-    pub mod request {
-        use super::method::Method;
-        pub struct Request {
-            path: String,
-            query_string: Option<String>,
-            method: Method,
-        }
-    }
-    mod method {
-        pub enum Method {
-            GET,
-            DELETE,
-            POST,
-            PUT,
-            HEAD,
-            CONNECT,
-            OPTIONS,
-            TRACE,
-            PATCH,
-        }
-    }
-}
