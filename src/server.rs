@@ -1,6 +1,5 @@
 use std::io::Read;
 use std::convert::TryFrom;
-use std::convert::TryInto;
 use std::net::TcpListener;
 use crate::http::Request;
 
@@ -14,7 +13,7 @@ impl Server {
     }
 
     pub fn run(self) {
-        print!("Listening on {}", self.addr);
+        println!("Listening on {}", self.addr);
 
         let listener = TcpListener::bind(&self.addr).unwrap();
 
@@ -29,7 +28,9 @@ impl Server {
                             println!("Receieved request: {}", String::from_utf8_lossy(&buffer));
 
                             match Request::try_from(&buffer[..]) {
-                                Ok(request) => todo!(),
+                                Ok(request) => {
+                                    dbg!(request);
+                                },
                                 Err(e) => print!("Failed to parse a request: {}", e),
                             }
                         }
