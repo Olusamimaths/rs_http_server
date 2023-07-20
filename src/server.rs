@@ -38,7 +38,7 @@ fn handle_ok_request(mut stream: std::net::TcpStream) {
                     let response = Response::new(StatusCode::Ok, Some(
                         "<h1>Welcome to My Rust Server</h1>".to_string()
                     ));
-                    write!(stream, "{}", response);
+                    response.send(&mut stream);
                 }
                 Err(e) => print!("Failed to parse a request: {}", e),
             }
