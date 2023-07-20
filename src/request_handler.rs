@@ -26,7 +26,10 @@ impl Handler for RequestHandler {
                     StatusCode::Ok,
                     self.read_file("post.html"),
                 ),
-                _ => Response::new(StatusCode::NotFound, None),
+                path => match self.read_file(path) {
+                    Some(contents) => Response::new(StatusCode::Ok, Some(contents)),
+                    None => Response::new(StatusCode::NotFound, None),
+                },
             },
             _ => Response::new(StatusCode::NotFound, None),
         }
